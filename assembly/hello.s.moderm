@@ -1,0 +1,23 @@
+.text
+.code16
+_start:
+  mov $0x3f8, %dx
+  mov $var1, %bx
+
+  mov (%bx), %al
+  out %al, %dx
+
+  mov 0x10(%bx), %al
+  out %al, %dx
+
+  mov %bl, %al
+
+  hlt
+
+.org 0x50
+var1:
+  .byte 0x41
+
+.org 0x60
+var2:
+  .byte 0x42

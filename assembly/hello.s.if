@@ -1,0 +1,19 @@
+.text
+.code16
+start:
+  mov $0x3f8, %dx
+
+  cmp $'A', var
+  jne 1f
+  mov $'A', %al
+  jmp 2f
+
+1:
+  mov $'B', %al
+
+2:
+  out %al, %dx
+  hlt
+
+var:
+  .byte 0x41

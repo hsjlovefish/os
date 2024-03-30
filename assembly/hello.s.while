@@ -1,0 +1,14 @@
+.text
+.code16
+start:
+  mov $1, %bx
+  mov $0, %ax
+1:
+  add %bx, %ax
+  inc %bx
+  cmp $11, %bx
+  jbe 1b
+
+  mov $0x3f8, %dx
+  out %al, %dx
+  hlt

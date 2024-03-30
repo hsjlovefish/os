@@ -1,0 +1,23 @@
+.text
+.code16
+start:
+  mov $stack, %sp
+  mov $0x3f8, %dx
+
+  push $0x41
+  push $0x42
+
+  mov 0x1000 - 2, %ax
+  out %ax, %dx
+  mov 0x1000 - 4, %ax
+  out %ax, %dx
+
+  pop %ax
+  out %ax, %dx
+  pop %ax
+  out %ax, %dx
+
+  hlt
+
+.org 0x1000
+stack:

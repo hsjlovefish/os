@@ -1,0 +1,10 @@
+build:
+	as -o hello.o hello.s
+	ld -Ttext=0 hello.o -o hello.elf
+	objcopy -O binary hello.elf hello.bin
+
+dump: build
+	objdump -d -m i8086 hello.elf
+
+run: build
+	../kvmtool/lkvm run -c 1 -k hello.bin
