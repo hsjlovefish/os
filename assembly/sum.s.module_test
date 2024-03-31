@@ -1,0 +1,23 @@
+.text
+.code16
+.global sum
+sum:
+  push %bp
+  mov %sp, %bp
+
+  mov $1, %bx
+  mov $0, %ax
+  sub $8, %sp
+1:
+  add %bx, %ax
+  inc %bx
+  cmp $10, %bx
+  jbe 1b
+
+  mov $0x3f8, %dx
+  out %ax, %dx
+
+
+  mov %bp, %sp
+  pop %bp
+  ret
