@@ -36,6 +36,17 @@ start32:
   cmp $(0x33000 + 512 * 32 * 8 - 8), %edi
   jle 2b
 
+  # setup direct-map level2
+  mov $0x56000, %edi
+  mov $0x33000 + 3, %eax
+3:
+  stosl
+  add $0x1000, %eax
+  add $4, %edi
+
+  cmp $(0x56000 + 32 * 8 - 8), %edi
+  jle 3b
+
   # enable PAE
   mov %cr4, %eax
   btsl $5, %eax
@@ -72,7 +83,9 @@ gdtr:
 
 .org 0x10000
   .quad 0x0000000000053003
-  .fill 510, 8, 0
+  .fill 272, 8, 0
+  .quad 0x0000000000055003
+  .fill 237, 8, 0
   .quad 0x0000000000031003
 
 .org 0x11000
@@ -93,3 +106,19 @@ gdtr:
 .org 0x34000
   .quad 0x0000000000033003
   .fill 511, 8, 0
+
+## linear map
+# pml3
+.org 0x35000
+  .quad 0x0000000000056003
+  .fill 511, 8, 0
+
+# pml2
+.org 0x36000
+  .fill 32, 8, 0
+  .quad 0x0000000000057003
+  .fill 479, 8, 0
+
+# pml1
+.org 0x37000
+  .fill 512, 8, 0

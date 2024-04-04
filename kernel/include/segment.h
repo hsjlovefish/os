@@ -1,3 +1,5 @@
+#pragma once
+
 #define KERNEL_CS 0x8
 #define KERNEL_DS 0x10
 

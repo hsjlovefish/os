@@ -11,9 +11,23 @@ boot32.bin: boot32.S
 	ld -Ttext=0x20000 boot32.o -o boot32.elf
 	objcopy -O binary boot32.elf boot32.bin
 
-system.bin: head64.o main.o
+CFLAGS = -std=c11 -I. -fno-pic -mcmodel=kernel -fno-stack-protector -fcf-protection=none \
+				 -nostdinc -fno-builtin
+
+SRCS = main.c $(wildcard mm/*.c) $(wildcard lib/*.c)
+OBJS = $(SRCS:.c=.o)
+
+system.bin: head64.o $(OBJS)
 	ld -Ttext=0xffffffff80100000 $^ -o system.elf
 	objcopy -O binary system.elf $@
+
+.depend: $(SRCS)
+	@rm -f .depend
+	@$(foreach src,$(SRCS), \
+		echo -n $(dir $(src)) >> .depend; \
+		gcc -I. -MM $(src) >> .depend; \
+	)
+include .depend
 
 build: build.c
 	gcc $< -o $@
