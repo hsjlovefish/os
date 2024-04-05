@@ -33,3 +33,6 @@ struct e820map {
 void mm_init();
 unsigned long alloc_page();
 void free_page(unsigned long addr);
+void* malloc(int size);
+void free(void* obj);
+void map_range(unsigned long pml4_pa, unsigned long from_va, unsigned long to_pa, char us, long npage);

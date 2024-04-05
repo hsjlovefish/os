@@ -1,13 +1,13 @@
 # what's this
-Operating system learning records
+learning records for operating system
 
 # usage
 ## compile
-git submodule update --init --recursive
-cd kvmtool && make
+1. git submodule update --init --recursive
+2. cd kvmtool && make
 ## run assembly demo
-cd assembly
-make run
+1. cd assembly
+2. make run
 ## run kernel demo
-cd kernel
-make run
+1. cd kernel
+2. make run
