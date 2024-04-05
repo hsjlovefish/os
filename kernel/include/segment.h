@@ -7,3 +7,4 @@
 #define USER_DS   0x23
 #define USER_CS   0x2b
 
+#define GDT_TSS_ENTRY 6

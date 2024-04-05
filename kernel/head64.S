@@ -2,6 +2,8 @@
 
 .text
 .code64
+.globl gdt
+.globl ret_from_kernel
   mov $0x3f8, %dx
   mov $'L', %ax
   out %ax, %dx
@@ -39,3 +41,11 @@ gdtr:
 # 4kb
 .fill 4096, 1, 0
 task0_stack:
+
+ret_from_kernel:
+  mov $USER_DS, %rax
+  movw %ax, %ds
+  movw %ax, %es
+  movw %ax, %fs
+  movw %ax, %gs
+  iretq

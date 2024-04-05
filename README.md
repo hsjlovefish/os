@@ -1,5 +1,5 @@
 # what's this
-learning records for operating system
+records in the process of learning operating system
 
 # usage
 ## compile
