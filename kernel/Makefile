@@ -16,8 +16,8 @@ CFLAGS = -std=c11 -I. -fno-pic -mcmodel=kernel -fno-stack-protector -fcf-protect
 SRCS = main.c $(wildcard mm/*.c) $(wildcard lib/*.c) $(wildcard kernel/*.c)
 OBJS = $(SRCS:.c=.o)
 
-system.bin: head64.o $(OBJS)
-	ld -Ttext=0xffffffff80100000 $^ -o system.elf
+system.bin: head64.o kernel/handler.o $(OBJS)
+	ld -Ttext=0xffffffff80100000 head64.o kernel/handler.o $(OBJS) -o system.elf
 	objcopy -O binary system.elf $@
 
 .depend: $(SRCS)
@@ -43,4 +43,5 @@ run: kernel.bin
 	../kvmtool/lkvm run -c 1 -k ./kernel.bin
 
 clean:
-	rm -rf *.bin *.elf *.o build
+	find -name "*.o" -o -name "*.elf" -o -name "*.bin" | xargs rm -f
+	rm -f build .depend

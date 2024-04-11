@@ -1,3 +1,6 @@
+#define IO_PIC     0x20
+#define IRQ_OFFSET 32
+
 .text
 .code16
 start16:
@@ -16,6 +19,19 @@ e820_rd_entry:
 
   cmp $0, %ebx
   jne e820_rd_entry
+
+  # Init 8259A
+  mov $0x13, %al
+  mov $(IO_PIC), %dx
+  out %al,%dx
+  # ICW2
+  mov $(IRQ_OFFSET), %al
+  mov $(IO_PIC+1), %dx
+  out %al, %dx
+  # ICW4
+  mov $0x1, %al
+  mov $(IO_PIC+1), %dx
+  out %al, %dx
 
   lgdt gdtr
 

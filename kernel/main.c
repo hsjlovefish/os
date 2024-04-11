@@ -1,3 +1,4 @@
+#include "include/interrupt.h"
 #include "include/mm.h"
 #include "include/print.h"
 #include "include/sched.h"
@@ -11,6 +12,9 @@ int main() {
          "out %ax, %dx\n");
 
   mm_init();
+  interrupt_init();
+
+  __asm__("sti");
   sched_init();
   tss_init();
 
@@ -20,6 +24,8 @@ int main() {
   // print(*x);
 
   __asm__ ("mov %0, %%cr3": :"r"(current->pml4));
+
+  init_8254();
 
   __asm__ ("movq %0, %%rsp\n\t"
            "jmp ret_from_kernel\n\t"

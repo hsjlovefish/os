@@ -1,4 +1,5 @@
 #include "include/mm.h"
+#include "include/print.h"
 #include "include/sched.h"
 #include "include/segment.h"
 #include "include/string.h"
@@ -13,8 +14,8 @@ static void fake_task_stack(unsigned long kstack) {
   unsigned long rsp = 0x8000000;
   uint16_t cs = USER_CS;
   unsigned long rip = 0x100000;
-
   unsigned long rsp_tmp;
+
   __asm__ ("mov %%rsp, %5\n\t"
            "mov %4, %%rsp\n\t"
            "pushq %0\n\t"
@@ -61,4 +62,8 @@ void sched_init() {
   make_task(1, 0x100000, 0xc800000);
 
   current = task_head; 
+}
+
+void do_timer() {
+  print('T');
 }

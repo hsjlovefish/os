@@ -9,6 +9,7 @@
   out %ax, %dx
 
   lgdt gdtr
+  lidt idtr
 
   mov $KERNEL_DS, %ax
   mov %ax, %ds
@@ -37,6 +38,10 @@ gdt_end:
 gdtr:
   .word gdt_end - gdt
   .quad gdt
+
+idtr:
+  .word 16 * 256
+  .quad idt_table
 
 # 4kb
 .fill 4096, 1, 0

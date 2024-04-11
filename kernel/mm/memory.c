@@ -1,6 +1,7 @@
 #include "include/mm.h"
 #include "include/print.h"
 #include "include/string.h"
+#include "include/sched.h"
 #include "include/types.h"
 
 unsigned long mem_size = 0;
@@ -72,4 +73,9 @@ void map_range(unsigned long pml4_pa, unsigned long from_va, unsigned long to_pa
     n++;
     from_va += PAGE_SIZE;
   }
+}
+
+void do_page_fault(unsigned long addr) {
+  unsigned long pa = alloc_page();
+  map_range(current->pml4, addr, pa, 0x4, 1);
 }
