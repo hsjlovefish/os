@@ -2,6 +2,7 @@
 .code64
 .globl timer_handler
 .globl pf_handler
+.globl system_call
 
 .macro SAVE_CONTEXT save_rax = 1
   pushq %rdi
@@ -52,3 +53,17 @@ pf_handler:
   RESTORE_CONTEXT
   add $8, %rsp
   iretq
+
+system_call:
+  mov %rsp, tss + 20
+  mov tss + 4, %rsp
+
+  pushq tss + 20
+  SAVE_CONTEXT 0
+
+  call *syscall_table(, %rax, 8)
+
+  RESTORE_CONTEXT 0
+  pop %rsp
+
+  sysretq

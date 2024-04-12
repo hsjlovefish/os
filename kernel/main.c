@@ -3,6 +3,7 @@
 #include "include/print.h"
 #include "include/sched.h"
 #include "include/segment.h"
+#include "include/syscall.h"
 #include "include/tss.h"
 
 int main() {
@@ -13,6 +14,7 @@ int main() {
 
   mm_init();
   interrupt_init();
+  syscall_init(); 
 
   __asm__("sti");
   sched_init();

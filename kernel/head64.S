@@ -4,6 +4,9 @@
 .code64
 .globl gdt
 .globl ret_from_kernel
+.globl task0_stack 
+.globl idle_task_entry 
+
   mov $0x3f8, %dx
   mov $'L', %ax
   out %ax, %dx
@@ -54,3 +57,9 @@ ret_from_kernel:
   movw %ax, %fs
   movw %ax, %gs
   iretq
+
+idle_task_entry:
+1:
+  sti
+  hlt
+  jmp 1b
