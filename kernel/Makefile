@@ -13,7 +13,7 @@ boot32.bin: boot32.S
 
 CFLAGS = -std=c11 -I. -fno-pic -mcmodel=kernel -fno-stack-protector -fcf-protection=none \
 				 -nostdinc -fno-builtin
-SRCS = main.c $(wildcard mm/*.c) $(wildcard lib/*.c) $(wildcard kernel/*.c)
+SRCS = main.c $(wildcard mm/*.c) $(wildcard lib/*.c) $(wildcard kernel/*.c) $(wildcard ipc/*.c)
 OBJS = $(SRCS:.c=.o)
 
 system.bin: head64.o kernel/handler.o $(OBJS)
@@ -31,7 +31,7 @@ include .depend
 app/libc/libc.o: app/libc/syscall.o
 	ld -r -o $@ $^
 
-# app
+# app by assembly
 # app/app1.bin: app/app1.S
 # 	gcc -c app/app1.S -o app/app1.o
 # 	ld -Ttext=0x100000 app/app1.o -o app/app1.elf

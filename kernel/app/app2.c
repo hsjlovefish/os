@@ -3,8 +3,10 @@
 #include "app/libc/type.h"
 
 int main() {
+  void* shm = shm_open("shm");
+
   while (1) {
-    print('B');
+    print(*(char*)shm);
     sleep(1000);
   }
 }

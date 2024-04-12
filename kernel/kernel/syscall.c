@@ -11,8 +11,9 @@
 typedef unsigned long (*fn_ptr)();
 
 unsigned long do_sleep(long ms);
+unsigned long do_shm(const char* name);
 
-fn_ptr syscall_table[] = { do_sleep };
+fn_ptr syscall_table[] = { do_sleep, do_shm };
 
 void syscall_init() {
   uint64_t star_val = (uint64_t)USER32_CS << 48  | (uint64_t)KERNEL_CS << 32;
