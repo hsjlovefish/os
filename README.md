@@ -11,3 +11,6 @@ records in the process of learning operating system
 ## run kernel demo
 1. cd kernel
 2. make run
+
+# update
+2024.04.12: kernel is completed
